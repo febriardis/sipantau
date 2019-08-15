@@ -1,31 +1,45 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+    <v-app>
+        <!-- header -->
+        <Header/>
+        <!-- /header -->
+        
+        <v-content>
+            <v-container fluid grid-list-xl>
+                <v-layout row wrap>
+                    <v-flex md3 sm12 xs12 class="hidden-sm-and-down">
+                        <!-- navigasi -->
+                        <Sidebar/>
+                        <!-- /navigasi -->
+                    </v-flex>
+
+                    <v-flex md9 sm12 xs12>
+                        <!-- contet -->
+                        <router-view></router-view>
+                        <!-- /content -->
+                    </v-flex>
+                </v-layout>
+                
+            </v-container>
+        </v-content>
+
+        <!-- footer -->
+        <v-footer>
+            <div>&copy;2019 sipantau-louhan.</div>
+        </v-footer>
+        <!-- /footer -->
+    </v-app>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
+    import Header from './components/Header'
+    import Sidebar from './components/SideBar'
+    export default {
+        name:'app',
+        components:{
+            Sidebar,
+            Header
+        }, 
+    }
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
