@@ -7,7 +7,7 @@
         >
             <v-list shaped>
             <v-subheader>APLIKASI</v-subheader>
-            <v-list-item-group v-model="item" color="#4ca2cd">
+            <v-list-item-group color="#4ca2cd">
                 <v-list-item
                     v-for="(item, i) in items"
                     :key="i"

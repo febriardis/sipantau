@@ -5,8 +5,7 @@ import store from "./store";
 import vuetify from './plugins/vuetify';
 import axios from 'axios';
 import VueSweetalert2 from 'vue-sweetalert2';
-
-import "@/plugins/echarts";
+import VueApexCharts from 'vue-apexcharts';
 
 Vue.config.productionTip = false;
 
@@ -17,6 +16,9 @@ axios.defaults.headers = {
 }
 
 Vue.use(VueSweetalert2);
+Vue.use(VueApexCharts);
+ 
+Vue.component('apexchart', VueApexCharts);
 
 new Vue({
   router,

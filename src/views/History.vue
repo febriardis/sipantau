@@ -1,48 +1,60 @@
 <template>
     <div class="history">
-        <v-card color="#4ca2cd" dark>
+        <v-card color="#2193b0" dark>
             <h5 class="headline" style="padding:8px 15px">Riwayat Pemantauan Air Akuarium</h5>
         </v-card>
       
         <v-data-table
             :headers="headers"
-            :items="data"
+            :items="items"
             class="elevation-5"
-            :rows-per-page-items="rowsPerPage"
-            disable-initial-sort
+            :items-per-page="10"
+            disable-sort
+            :loading="load_data"
+            loading-text="Sedang mengambil data... Silahkan tunggu"
         >
-            <template v-slot:items="props">
-                <!-- <td class="text-xs-center">{{ props.index }}</td> -->
-                <td>{{moment(props.item.created_at).format('dddd, DD MMMM YYYY')}} deded </td>
-                <!-- <td>{{moment(props.item.created_at).format('HH:mm')}} {{props.item.created_at}} </td> -->
-                <td class="text-xs-center">{{ props.item.ph }}</td>
-                <td class="text-xs-center">{{ props.item.temperature }}</td>
-                <td class="text-xs-center">{{ props.item.turbidity }}</td>
-                <td>{{ props.item.status }}</td>
+            <template v-if="load_data==false" v-slot:body="{ items }">
+                <tbody>
+                    <tr v-for="(item,i) in items" :key="item.name">
+                        <!-- <td style="text-align:center">{{i+1}}</td> -->
+                        <td>{{moment(item.created_at).format('dddd, DD MMMM YYYY')}}</td>
+                        <td>{{moment(item.created_at).format('HH:mm')}}</td>
+                        <td>{{item.ph}}</td>
+                        <td>{{item.temperature}}</td>
+                        <td>{{item.turbidity}}</td>
+                        <td>{{item.status}}</td>
+                        <td>{{item.information}}</td>
+                    </tr>
+                </tbody>
             </template>
         </v-data-table>
     </div>
 </template>
 
 <script>
+import { HollowDotsSpinner } from 'epic-spinners'
 import Axios from 'axios';
 import moment from 'moment';
     export default {
+        components:{
+            HollowDotsSpinner
+        },
         data () {
             return {
-                no:1,
-                rowsPerPage: [10, 25, 50, {"text":"$vuetify.dataIterator.rowsPerPageAll","value":-1}],
+                load_data:true,
+                tb_data:false,
                 headers: [
-                    { text: 'No',align: 'center', sortable: false, value: 'index'},
+                    // { text: 'No',align: 'center', sortable: false, value: 'q'},
                     { text: 'Tanggal', value: 'created_at' },
                     { text: 'Waktu', value: 'created_at' },
                     { text: 'Keasaman (pH)', value: 'ph' },
                     { text: 'Suhu', value: 'temperature' },
                     { text: 'Kekeruhan', value: 'turbidity' },
-                    { text: 'Keterangan', value: 'status' }
+                    { text: 'Status', value: 'status' },
+                    { text: 'Keterangan', value: 'information' }
                 ],
                 index: [],
-                data: []
+                items: []
             }
         },
 
@@ -51,17 +63,19 @@ import moment from 'moment';
             getHistory(){
                 Axios.get('/show/all')
                 .then(response=>{
-                    this.data = response.data.data
+                    this.load_data = false
+                    this.tb_data = true
+                    this.items = response.data.data
                 })
                 .catch(error=>{
                     console.log(error.response)
                 })
-            }
+            },
         },
 
-        // updated(){
-        //     this.getHistory()
-        // },
+        updated(){
+            this.getHistory();
+        },
 
         mounted(){
             this.getHistory()

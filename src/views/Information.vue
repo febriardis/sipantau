@@ -1,6 +1,6 @@
 <template>
     <div class="informasi">
-        <v-card color="#4ca2cd" dark>
+        <v-card color="#2193b0" dark>
             <h5 class="headline" style="padding:8px 15px">Informasi</h5>
         </v-card>
 

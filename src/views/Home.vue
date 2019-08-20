@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <v-card color="#4ca2cd" dark>
+        <v-card color="#2193b0" dark>
             <h5 class="headline" style="float:left;padding:8px 15px">Pemantauan Air Akuarium</h5>
             <v-card light style="float:right;margin:5px;padding:6px 6px 3px 6px">
                 <v-icon>event</v-icon>
@@ -24,15 +24,42 @@
                             <tbody>
                                 <tr height="40">
                                     <td style="padding:0px 20px">Keasaman (pH)</td>
-                                    <td style="text-align:center">{{data.ph}}</td>
+                                    <td style="text-align:center">
+                                        <span v-show="nil">{{data.ph}}</span>
+                                        <looping-rhombuses-spinner
+                                            v-show="load_data"
+                                            style="width:50px;margin:0px auto;"
+                                            :animation-duration="2500"
+                                            :rhombus-size="10"
+                                            color="#90CAF9"
+                                        />    
+                                    </td>
                                 </tr>
                                 <tr height="40">
                                     <td style="padding:0px 20px">Suhu</td>
-                                    <td style="text-align:center">{{data.temperature}} <b>&deg;C</b></td>
+                                    <td style="text-align:center">
+                                        <span v-show="nil">{{data.temperature}} <b>&deg;C</b></span>
+                                        <looping-rhombuses-spinner
+                                            v-show="load_data"
+                                            style="width:50px;margin:0px auto;"
+                                            :animation-duration="2500"
+                                            :rhombus-size="10"
+                                            color="#90CAF9"
+                                        /> 
+                                    </td>
                                 </tr>
                                 <tr height="40">
                                     <td style="padding:0px 20px">Kekeruhan</td>
-                                    <td style="text-align:center">{{data.turbidity}} <b>NTU</b></td>
+                                    <td style="text-align:center">
+                                        <span v-show="nil"> {{data.turbidity}} <b>NTU</b></span>
+                                        <looping-rhombuses-spinner
+                                            v-show="load_data"
+                                            style="width:50px;margin:0px auto;"
+                                            :animation-duration="2500"
+                                            :rhombus-size="10"
+                                            color="#90CAF9"
+                                        /> 
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -51,60 +78,68 @@
                 </v-layout>
             </v-container>
         </v-card>
-        
     </div>
 </template>
 
 <script>
+import { LoopingRhombusesSpinner } from 'epic-spinners'
 import axios from 'axios';
 import moment from 'moment';
 export default {
     data(){
         return {
-            data: []
+            data: [],
+            nil: false,
+            load_data:true
         }
+    },
+
+    components:{
+        LoopingRhombusesSpinner
     },
 
     methods: {
         moment,
-      
+
         getData(){
             axios.get('/show/latest')
             .then(response => {
+                this.load_data = false
+                this.nil = true
                 this.data = response.data.data
             })
             .catch(error => {
                 console.log(error.response)
             })
-        }
+        },
     },
 
-    // updated(){
-    //     this.getData()
-    // },
-
-//     $ket   = "suhu dan ph rendah";
-// $ket   = "suhu rendah";        
-// $ket   = "suhu rendah, dan ph tinggi";   
-// $ket   = "suhu dan ph rendah, serta kekeruhan tinggi"; 
-// $ket   = "suhu rendah dan kekeruhan tinggi";   
-// $ket   = "suhu rendah, ph dan kekeruhan tinggi";  
-// $ket   = "ph rendah";   
-// $ket   = "nilai parameter normal";  
-// $ket   = "ph tinggi";  
-// $ket   = "ph rendah dan kekeruhan tinggi";  
-// $ket   = "kekeruhan tinggi";  
-// $ket   = "ph dan kekeruhan tinggi";  
-// $ket   = "suhu tinggi dan ph rendah";  
-// $ket   = "suhu tinggi";  
-// $ket   = "suhu dan ph tinggi";  
-// $ket   = "ph rendah, serta suhu dan kekeruhan tinggi";  
-// $ket   = "suhu dan kekeruhan tinggi";  
-// $ket   = "suhu, ph, dan kekeruhan tinggi";  
+    updated(){
+        this.getData()
+    },
 
     mounted(){
         this.getData()
     }
+
+    // $ket   = "suhu dan ph rendah";
+    // $ket   = "suhu rendah";        
+    // $ket   = "suhu rendah, dan ph tinggi";   
+    // $ket   = "suhu dan ph rendah, serta kekeruhan tinggi"; 
+    // $ket   = "suhu rendah dan kekeruhan tinggi";   
+    // $ket   = "suhu rendah, ph dan kekeruhan tinggi";  
+    // $ket   = "ph rendah";   
+    // $ket   = "nilai parameter normal";  
+    // $ket   = "ph tinggi";  
+    // $ket   = "ph rendah dan kekeruhan tinggi";  
+    // $ket   = "kekeruhan tinggi";  
+    // $ket   = "ph dan kekeruhan tinggi";  
+    // $ket   = "suhu tinggi dan ph rendah";  
+    // $ket   = "suhu tinggi";  
+    // $ket   = "suhu dan ph tinggi";  
+    // $ket   = "ph rendah, serta suhu dan kekeruhan tinggi";  
+    // $ket   = "suhu dan kekeruhan tinggi";  
+    // $ket   = "suhu, ph, dan kekeruhan tinggi";  
 }
 </script>
 
