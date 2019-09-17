@@ -18,7 +18,7 @@
                     <tr v-for="(item,i) in items" :key="item.name">
                         <!-- <td style="text-align:center">{{i+1}}</td> -->
                         <td>{{moment(item.created_at).format('dddd, DD MMMM YYYY')}}</td>
-                        <td>{{moment(item.created_at).format('HH:mm')}}</td>
+                        <td>{{moment(item.created_at).format('HH:mm:ss')}}</td>
                         <td>{{item.ph}}</td>
                         <td>{{item.temperature}}</td>
                         <td>{{item.turbidity}}</td>
@@ -47,7 +47,7 @@ import moment from 'moment';
                     // { text: 'No',align: 'center', sortable: false, value: 'q'},
                     { text: 'Tanggal', value: 'created_at' },
                     { text: 'Waktu', value: 'created_at' },
-                    { text: 'Keasaman (pH)', value: 'ph' },
+                    { text: 'pH', value: 'ph' },
                     { text: 'Suhu', value: 'temperature' },
                     { text: 'Kekeruhan', value: 'turbidity' },
                     { text: 'Status', value: 'status' },
@@ -61,6 +61,10 @@ import moment from 'moment';
         methods:{
             moment,
             getHistory(){
+                Axios.defaults.headers = {  
+                    'Content-Type': 'application/json', 
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
                 Axios.get('/show/all')
                 .then(response=>{
                     this.load_data = false

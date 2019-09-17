@@ -23,7 +23,7 @@
                             </thead>
                             <tbody>
                                 <tr height="40">
-                                    <td style="padding:0px 20px">Keasaman (pH)</td>
+                                    <td style="padding:0px 20px">pH</td>
                                     <td style="text-align:center">
                                         <span v-show="nil">{{data.ph}}</span>
                                         <looping-rhombuses-spinner
@@ -64,16 +64,89 @@
                             </tbody>
                         </table>
                         <v-card style="margin:10px 30px 0px 0px; padding:10px 20px">
-                            <span><b>Status:</b>&nbsp;<span class="font-weight-light">{{data.status}}</span></span><br>
-                            <span><b>Keterangan:</b>&nbsp;<span class="font-weight-light">{{data.information}}</span></span>
+                            <span>
+                                <b>Status:</b>
+                                <v-chip v-if="data.status=='air tidak layak !!'" class="ma-2 font-weight-light" color="red" text-color="white">{{data.status}}</v-chip>
+                                <v-chip v-else class="ma-2 font-weight-light" color="green" text-color="white">{{data.status}}</v-chip>
+                            </span>
+                            <br>
+                            <span>
+                                <b>Keterangan:</b>
+                                <v-chip outlined color="success" class="ma-2 font-weight-light">{{data.information}}</v-chip>
+                            </span>
                         </v-card>
                     </v-flex>
                     <v-flex md6 sm12 xs12>
                         <h6 class="title"><b>Penanganan:</b></h6>
-                        <ul>
-                            <li>Ganti air untuk mengurangi tingkat kekeruhan air</li>
+                        <ul v-if="data.information=='suhu dan ph rendah'">
+                            <li>Taburkan kapur secukupnya sampai (pH) kembali normal atau Ganti air dengan yang baru untuk menormalkan (pH)</li>
                             <li>Nyalakan perangkat pemanas untuk meningkatkan suhu</li>
                         </ul>
+                        <ul v-else-if="data.information=='suhu rendah'">
+                            <li>Nyalakan perangkat pemanas untuk meningkatkan suhu</li>
+                        </ul>
+                        <ul v-else-if="data.information=='suhu rendah, dan ph tinggi'">
+                            <li>Nyalakan perangkat pemanas untuk meningkatkan suhu</li>
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH)</li>
+                        </ul>
+                        <ul v-else-if="data.information=='suhu dan ph rendah, serta kekeruhan tinggi'">
+                            <li>Nyalakan perangkat pemanas untuk meningkatkan suhu</li>
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH) dan tingkat kekeruhan</li>
+                        </ul>
+                            <ul v-else-if="data.information=='suhu rendah dan kekeruhan tinggi'">
+                            <li>Nyalakan perangkat pemanas untuk meningkatkan suhu</li>
+                            <li>Ganti air dengan yang baru untuk menormalkan tingkat kekeruhan</li>
+                        </ul>
+                            <ul v-else-if="data.information=='suhu rendah, ph dan kekeruhan tinggi'">
+                            <li>Nyalakan perangkat pemanas untuk meningkatkan suhu</li>
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH) dan tingkat kekeruhan</li>
+                        </ul>
+                            <ul v-else-if="data.information=='ph rendah'">
+                            <li>Taburkan kapur secukupnya sampai (pH) kembali normal atau Ganti air dengan yang baru untuk menormalkan (pH)</li>
+                        </ul>
+                            <ul v-else-if="data.information=='nilai parameter normal'">
+                            <li>-</li>
+                        </ul>
+                            <ul v-else-if="data.information=='ph tinggi'">
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH)</li>
+                        </ul>
+                            <ul v-else-if="data.information=='ph rendah dan kekeruhan tinggi'">
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH) dan tingkat kekeruhan</li>
+                        </ul>
+                            <ul v-else-if="data.information=='kekeruhan tinggi'">
+                            <li>Ganti air dengan yang baru untuk menormalkan tingkat kekeruhan</li>
+                        </ul>
+                        <ul v-else-if="data.information=='ph dan kekeruhan tinggi'">
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH) dan tingkat kekeruhan</li>
+                        </ul>
+                            <ul v-else-if="data.information=='suhu tinggi dan ph rendah'">
+                            <li>Nyalakan perangkat pendingin untuk menormalkan suhu</li>
+                            <li>Taburkan kapur secukupnya sampai (pH) kembali normal atau Ganti air dengan yang baru untuk menormalkan (pH)</li>
+                        </ul>
+                            <ul v-else-if="data.information=='suhu tinggi'">
+                            <li>Nyalakan perangkat pendingin untuk menormalkan suhu</li>
+                        </ul>
+                            <ul v-else-if="data.information=='suhu dan ph tinggi'">
+                            <li>Nyalakan perangkat pendingin untuk menormalkan suhu</li>
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH)</li>
+                        </ul>
+                            <ul v-else-if="data.information=='ph rendah, serta suhu dan kekeruhan tinggi'">
+                            <li>Nyalakan perangkat pendingin untuk menormalkan suhu</li>
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH) dan tingkat kekeruhan</li>
+                        </ul>
+                            <ul v-else-if="data.information=='suhu dan kekeruhan tinggi'">
+                            <li>Nyalakan perangkat pendingin untuk menormalkan suhu</li>
+                            <li>Ganti air dengan yang baru untuk menormalkan tingkat kekeruhan</li>
+                        </ul>
+                            <ul v-else-if="data.information=='suhu, ph, dan kekeruhan tinggi'">
+                            <li>Nyalakan perangkat pendingin untuk meningkatkan suhu</li>
+                            <li>Ganti air dengan yang baru untuk menormalkan (pH) dan tingkat kekeruhan</li>
+                        </ul>
+                        <hr>
+                        <div style="margin-top:6px">
+                            <b>Catatan:</b><br>
+                            <i style="font-size:14px">&quot;Lakukan pemantauan manual dengan cara menekan tombol yang ada diperangkat, jika semua penanganan sudah dilakukan. Untuk melihat perubahan nilai parameter air.&quot;</i>
+                        </div>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -121,25 +194,6 @@ export default {
     mounted(){
         this.getData()
     }
-
-    // $ket   = "suhu dan ph rendah";
-    // $ket   = "suhu rendah";        
-    // $ket   = "suhu rendah, dan ph tinggi";   
-    // $ket   = "suhu dan ph rendah, serta kekeruhan tinggi"; 
-    // $ket   = "suhu rendah dan kekeruhan tinggi";   
-    // $ket   = "suhu rendah, ph dan kekeruhan tinggi";  
-    // $ket   = "ph rendah";   
-    // $ket   = "nilai parameter normal";  
-    // $ket   = "ph tinggi";  
-    // $ket   = "ph rendah dan kekeruhan tinggi";  
-    // $ket   = "kekeruhan tinggi";  
-    // $ket   = "ph dan kekeruhan tinggi";  
-    // $ket   = "suhu tinggi dan ph rendah";  
-    // $ket   = "suhu tinggi";  
-    // $ket   = "suhu dan ph tinggi";  
-    // $ket   = "ph rendah, serta suhu dan kekeruhan tinggi";  
-    // $ket   = "suhu dan kekeruhan tinggi";  
-    // $ket   = "suhu, ph, dan kekeruhan tinggi";  
 }
 </script>
 

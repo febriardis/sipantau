@@ -88,7 +88,7 @@ export default {
                     curve: 'straight'
                 },
                 title: {
-                    text: 'Grafik pH(Keasaman) Air',
+                    text: 'Grafik pH Air',
                     align: 'left'
                 },
                 grid: {
@@ -136,7 +136,7 @@ export default {
         turb_chartOptions:function() {
             return {
                 chart: {
-                    height: 350,
+                    height: 350, 
                     zoom: {
                         enabled: false
                     }
@@ -169,7 +169,10 @@ export default {
         // get ph endpoint
         getPH(){
             this.ph_series.length = 0
-
+            axios.defaults.headers = {  
+                'Content-Type': 'application/json', 
+                'X-Requested-With': 'XMLHttpRequest'
+            }
             axios.get('/show/ph')
             .then(res => {
                 const arr_ph = res.data.data
@@ -191,6 +194,10 @@ export default {
         //get temperature endpoint
         getTemperature(){
             this.suhu_series.length = 0
+            axios.defaults.headers = {  
+                'Content-Type': 'application/json', 
+                'X-Requested-With': 'XMLHttpRequest'
+            }
             axios.get('/show/temperature')
             .then(res => {
                 const arr_temp = res.data.data
@@ -215,6 +222,10 @@ export default {
         //get turbidity endpoint
         getTurbidity(){
             this.turb_series.length = 0
+            axios.defaults.headers = {  
+                'Content-Type': 'application/json', 
+                'X-Requested-With': 'XMLHttpRequest'
+            }
             axios.get('/show/turbidity')
             .then(res => {
                 const arr_turb = res.data.data

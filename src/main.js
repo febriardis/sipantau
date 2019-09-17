@@ -10,10 +10,10 @@ import VueApexCharts from 'vue-apexcharts';
 Vue.config.productionTip = false;
 
 axios.defaults.baseURL = 'http://sipapi.billionairecoach.co.id/api';
-axios.defaults.headers = {  
-    'Content-Type': 'application/json', 
-    'X-Requested-With': 'XMLHttpRequest'
-}
+// axios.defaults.headers = {  
+//     'Content-Type': 'application/json', 
+//     'X-Requested-With': 'XMLHttpRequest'
+// }
 
 Vue.use(VueSweetalert2);
 Vue.use(VueApexCharts);

@@ -28,13 +28,13 @@
                         <td style="padding:0px 20px">Suhu</td>
                         <td style="text-align:center"> x &lt; 2.6 </td>
                         <td style="text-align:center"> x &gt; 30 </td>
-                        <td style="text-align:center"> &deg;C  (<i>Celcius</i>)</td>
+                        <td style="text-align:center"> &deg;C  <i>(Celcius)</i></td>
                     </tr>
                     <tr height="40">
                         <td style="padding:0px 20px">Kekeruhan</td>
                         <td style="text-align:center">0 &lt; 25 </td>
                         <td style="text-align:center"> - </td>
-                        <td> NTU (Nephelometric Turbidity Unit) </td>
+                        <td> NTU <i>(Nephelometric Turbidity Unit)</i> </td>
                     </tr>
                 </tbody>
             </table>
